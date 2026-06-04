@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mann Co. Тестовый фасилити</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=TF2+Build:wght@400;700&display=swap');
+
+        :root {
+            --tf-orange: #cf6a32;
+            --tf-red: #b8383b;
+            --tf-red-dark: #8a2a2d;
+            --tf-brown: #3c352f;
+            --tf-brown-dark: #2a2521;
+            --tf-brown-light: #4a413a;
+            --tf-tan: #ece4d4;
+            --tf-border: #6b5e50;
+            --tf-yellow: #f3b42a;
+            --tf-cream: #f5e6c8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #2a2521;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                radial-gradient(ellipse at 50% 0%, rgba(207,106,50,0.08) 0%, transparent 70%);
+            color: var(--tf-tan);
+            font-family: 'Oswald', 'Segoe UI', Tahoma, sans-serif;
+            min-height: 100vh;
+            text-transform: uppercase;
+            overflow-x: hidden;
+        }
+
+        /* ═══ TF2-STYLE TOP BAR ═══ */
+        .top-bar {
+            background: linear-gradient(180deg, #4a413a 0%, #3c352f 50%, #2e2925 100%);
+            border-bottom: 3px solid #1a1613;
+            box-shadow: 0 2px 0 0 var(--tf-border), 0 4px 10px rgba(0,0,0,0.5);
+            padding: 0;
+            width: 100%;
+        }
+
+        .top-bar-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            gap: 15px;
+        }
+
+        .top-bar h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--tf-cream);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .top-bar-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--tf-border), transparent);
+        }
+
+        /* ═══ TF2 PANEL STYLE ═══ */
+        .tf2-panel {
+            background: linear-gradient(180deg, #4a413a, #3c352f);
+            border: 2px solid var(--tf-border);
+            border-top: 2px solid #7a6e60;
+            border-bottom: 2px solid #2a2320;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        /* ═══ MAIN MENU ═══ */
+        #main-menu {
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .menu-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-title h2 {
+            font-size: 1.1rem;
+            color: var(--tf-tan);
+            letter-spacing: 3px;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        /* ═══ TEST CARD ═══ */
+        .test-card {
+            background: linear-gradient(180deg, #4a413a 0%, #3c352f 100%);
+            border: 2px solid var(--tf-border);
+            border-top-color: #7a6e60;
+            border-bottom-color: #2a2320;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+        }
+
+        .test-card:hover {
+            border-color: var(--tf-orange);
+            background: linear-gradient(180deg, #554c44 0%, #443c36 100%);
+        }
+
+        .test-card:active {
+            background: linear-gradient(180deg, #3c352f 0%, #2e2925 100%);
+        }
+
+        .card-icon-box {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+        }
+
+        .test-card h3 {
+            color: var(--tf-cream);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .test-card p {
+            color: #9e9486;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        .card-count {
+            display: inline-block;
+            background: var(--tf-red-dark);
+            color: var(--tf-cream);
+            padding: 2px 8px;
+            font-size: 0.65rem;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* ═══ QUIZ WINDOW ═══ */
+        #quiz-window {
+            display: none;
+            max-width: 680px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .quiz-panel {
+            background: linear-gradient(180deg, #4a413a, #3c352f);
+            border: 2px solid var(--tf-border);
+            border-top-color: #7a6e60;
+            border-bottom-color: #2a2320;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        /* Progress */
+        .progress-outer {
+            background: #1e1b18;
+            height: 10px;
+            border: 1px solid #111;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tf-red), var(--tf-orange));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        #q-title {
+            color: var(--tf-orange);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .q-counter {
+            color: #7a6e60;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .q-divider {
+            height: 1px;
+            background: var(--tf-border);
+            margin-bottom: 16px;
+        }
+
+        #q-text {
+            font-size: 1.15rem;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 18px;
+            min-height: 50px;
+            color: var(--tf-cream);
+        }
+
+        /* Options */
+        .options-grid { display: grid; gap: 6px; }
+
+        button.option-btn {
+            background: linear-gradient(180deg, #5c554c, #4a433b);
+            border: 1px solid #6b5e50;
+            border-top-color: #7a6e60;
+            border-bottom-color: #3a342e;
+            color: var(--tf-cream);
+            padding: 12px 16px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            letter-spacing: 0.5px;
+        }
+
+        button.option-btn:hover {
+            background: linear-gradient(180deg, #6b6358, #5a524a);
+            border-color: var(--tf-orange);
+            color: white;
+        }
+
+        button.option-btn:active {
+            background: linear-gradient(180deg, #4a433b, #3c352f);
+        }
+
+        /* ═══ RESULT ═══ */
+        #result-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .result-canvas-box {
+            margin: 16px auto;
+        }
+
+        .result-percent {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--tf-cream);
+            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            margin: 8px 0;
+        }
+
+        .result-rank {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--tf-yellow);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .result-desc {
+            font-size: 0.85rem;
+            color: #b0a898;
+            text-transform: none;
+            line-height: 1.6;
+            max-width: 450px;
+            margin: 8px auto 16px;
+            font-weight: 400;
+        }
+
+        .stamp-box {
+            display: inline-block;
+            border: 3px solid var(--tf-red);
+            padding: 6px 20px;
+            transform: rotate(-6deg);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--tf-red);
+            letter-spacing: 2px;
+            margin: 12px 0;
+        }
+
+        .btn-back {
+            background: linear-gradient(180deg, #5c554c, #4a433b);
+            border: 1px solid var(--tf-border);
+            border-top-color: #7a6e60;
+            border-bottom-color: #3a342e;
+            color: var(--tf-cream);
+            padding: 12px 35px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 16px;
+            letter-spacing: 1px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .btn-back:hover {
+            background: linear-gradient(180deg, #6b6358, #5a524a);
+            border-color: var(--tf-orange);
+        }
+
+        /* ═══ FOOTER ═══ */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #4a413a;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 550px) {
+            .menu-grid { grid-template-columns: 1fr; }
+            .top-bar h1 { font-size: 1.3rem; }
+            .result-percent { font-size: 3rem; }
+            .quiz-panel { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<audio id="track1" preload="auto"><source src="music/track1.mp3" type="audio/mpeg"></audio>
+<audio id="track2" preload="auto"><source src="music/track2.mp3" type="audio/mpeg"></audio>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div class="top-bar-line"></div>
+        <h1>MANN CO. ТЕСТОВЫЙ ПОЛИГОН</h1>
+        <div class="top-bar-line"></div>
+    </div>
+</div>
+
+<!-- ═══ MAIN MENU ═══ -->
+<div id="main-menu">
+    <div class="menu-title">
+        <h2>-- выберите тестовый протокол --</h2>
+    </div>
+    <div class="menu-grid">
+        <div class="test-card" onclick="startQuiz('natural')">
+            <div class="card-icon-box"><canvas id="ic1" width="60" height="60"></canvas></div>
+            <h3>TECT HA HATYPAЛA</h3>
+            <p>Проверка устойчивости к MGE-паровозику и масляным наёмникам</p>
+            <div class="card-count">25 BONPOCOB</div>
+        </div>
+        <div class="test-card" onclick="startQuiz('tf2fan')">
+            <div class="card-icon-box"><canvas id="ic2" width="60" height="60"></canvas></div>
+            <h3>TECT HA ФAHATA TF2</h3>
+            <p>Насколько глубока твоя яма безумия и шляп</p>
+            <div class="card-count">25 BONPOCOB</div>
+        </div>
+        <div class="test-card" onclick="startQuiz('medic')">
+            <div class="card-icon-box"><canvas id="ic3" width="60" height="60"></canvas></div>
+            <h3>TECT HA MEДИKA</h3>
+            <p>Диагноз: Герой, Психопат или жертва шпиона</p>
+            <div class="card-count">20 BONPOCOB</div>
+        </div>
+        <div class="test-card" onclick="startQuiz('furry')">
+            <div class="card-icon-box"><canvas id="ic4" width="60" height="60"></canvas></div>
+            <h3>TECT HA ФYPPИ</h3>
+            <p>100% = фурри/фембой | 0% = натурал/MGE</p>
+            <div class="card-count">25 BONPOCOB</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz-window">
+    <div class="quiz-panel">
+        <div id="quiz-content">
+            <div class="progress-outer"><div class="progress-fill" id="progress"></div></div>
+            <div class="q-header">
+                <span id="q-title"></span>
+                <span class="q-counter" id="q-counter"></span>
+            </div>
+            <div class="q-divider"></div>
+            <p id="q-text"></p>
+            <div id="options" class="options-grid"></div>
+        </div>
+
+        <div id="result-screen">
+            <div class="result-canvas-box"><canvas id="result-canvas" width="160" height="160"></canvas></div>
+            <div id="res-percent" class="result-percent">0%</div>
+            <div id="res-rank" class="result-rank"></div>
+            <div id="stamp" class="stamp-box"></div>
+            <p id="res-desc" class="result-desc"></p>
+            <button class="btn-back" onclick="backToMenu()">BEPHYTBCЯ B MEHIO</button>
+        </div>
+    </div>
+</div>
+
+<footer>MANN CO. TESTING FACILITY // ALL RIGHTS BELONG TO SAXTON HALE // 2024</footer>
+
+<script>
+/* ══════════════════════
+   CARD ICONS
+   ══════════════════════ */
+function drawIcon(id, type) {
+    const c = document.getElementById(id);
+    if (!c) return;
+    const ctx = c.getContext('2d');
+    const s = 60, h = s/2;
+    ctx.clearRect(0,0,s,s);
+    ctx.strokeStyle = '#cf6a32';
+    ctx.fillStyle = 'rgba(207,106,50,0.15)';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (type === 'shield') {
+        ctx.beginPath();
+        ctx.moveTo(h,8); ctx.lineTo(h+18,16); ctx.lineTo(h+16,38);
+        ctx.quadraticCurveTo(h,54,h,54);
+        ctx.quadraticCurveTo(h,54,h-16,38);
+        ctx.lineTo(h-18,16); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = '#f3b42a'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(22,32); ctx.lineTo(28,40); ctx.lineTo(40,22); ctx.stroke();
+    }
+    else if (type === 'hat') {
+        ctx.fillRect(20,15,20,24); ctx.strokeRect(20,15,20,24);
+        ctx.fillRect(12,39,36,7); ctx.strokeRect(12,39,36,7);
+        ctx.fillStyle = '#f3b42a';
+        ctx.beginPath(); ctx.arc(h,27,3.5,0,Math.PI*2); ctx.fill();
+    }
+    else if (type === 'cross') {
+        ctx.fillStyle = 'rgba(184,56,59,0.2)';
+        ctx.strokeStyle = '#b8383b';
+        ctx.fillRect(24,10,12,40); ctx.strokeRect(24,10,12,40);
+        ctx.fillRect(12,22,36,12); ctx.strokeRect(12,22,36,12);
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillRect(27,15,6,30);
+        ctx.fillRect(17,26,26,6);
+    }
+    else if (type === 'paw') {
+        ctx.beginPath(); ctx.ellipse(h,38,12,10,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+        [[-10,-12,5],[-3,-18,5],[3,-18,5],[10,-12,5]].forEach(t => {
+            ctx.beginPath(); ctx.arc(h+t[0],38+t[1],t[2],0,Math.PI*2); ctx.fill(); ctx.stroke();
+        });
+    }
+}
+drawIcon('ic1','shield');
+drawIcon('ic2','hat');
+drawIcon('ic3','cross');
+drawIcon('ic4','paw');
+
+/* ══════════════════════
+   RESULT CANVAS
+   ══════════════════════ */
+function drawResult(type, pct) {
+    const c = document.getElementById('result-canvas');
+    const ctx = c.getContext('2d');
+    const s = 160, h = s/2;
+    ctx.clearRect(0,0,s,s);
+
+    // ring bg
+    ctx.strokeStyle = '#3c352f';
+    ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.arc(h,h,68,0,Math.PI*2); ctx.stroke();
+
+    // ring progress
+    const a = (pct/100)*Math.PI*2;
+    ctx.strokeStyle = '#cf6a32';
+    ctx.lineWidth = 6;
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(h,h,68,-Math.PI/2,-Math.PI/2+a); ctx.stroke();
+
+    // inner icon
+    ctx.save();
+    ctx.translate(h-30,h-30);
+    ctx.scale(1,1);
+    ctx.strokeStyle = pct>50 ? '#f3b42a' : '#7a6e60';
+    ctx.fillStyle = pct>50 ? 'rgba(243,180,42,0.1)' : 'rgba(120,110,96,0.1)';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (type==='natural') {
+        ctx.beginPath();
+        ctx.moveTo(30,6); ctx.lineTo(50,14); ctx.lineTo(48,38);
+        ctx.quadraticCurveTo(30,54,30,54);
+        ctx.quadraticCurveTo(30,54,12,38);
+        ctx.lineTo(10,14); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+    } else if (type==='tf2fan') {
+        ctx.fillRect(18,12,24,26); ctx.strokeRect(18,12,24,26);
+        ctx.fillRect(10,38,40,8); ctx.strokeRect(10,38,40,8);
+    } else if (type==='medic') {
+        ctx.fillRect(23,8,14,44); ctx.strokeRect(23,8,14,44);
+        ctx.fillRect(10,22,40,14); ctx.strokeRect(10,22,40,14);
+    } else if (type==='furry') {
+        ctx.beginPath(); ctx.ellipse(30,36,14,11,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+        [[-11,-13,6],[-4,-20,6],[4,-20,6],[11,-13,6]].forEach(t => {
+            ctx.beginPath(); ctx.arc(30+t[0],36+t[1],t[2],0,Math.PI*2); ctx.fill(); ctx.stroke();
+        });
+    }
+    ctx.restore();
+}
+
+/* ══════════════════════
+   AUDIO AUTO-PLAY
+   ══════════════════════ */
+const tracks = [document.getElementById('track1'), document.getElementById('track2')];
+let tIdx = 0;
+tracks[0].addEventListener('ended', nextTrack);
+tracks[1].addEventListener('ended', nextTrack);
+function nextTrack() {
+    tIdx = (tIdx+1) % 2;
+    tracks[tIdx].currentTime = 0;
+    tracks[tIdx].volume = 0.25;
+    tracks[tIdx].play();
+}
+function initAudio() {
+    tracks[0].volume = 0.25;
+    tracks[0].play().catch(()=>{});
+    document.removeEventListener('click', initAudio);
+}
+document.addEventListener('click', initAudio);
+
+/* ══════════════════════
+   QUIZ DATA
+   ══════════════════════ */
+const data = {
+
+natural: {
+    title: "TECT HA HATYPAJIA", type: "natural",
+    questions: [
+        {q:"Твоё отношение к Tick Tock - Joji?",a:["Гимн моей жизни","Обычная песня","Немедленно выключить"],s:[0,50,100]},
+        {q:"Потный Хэви танцует Казоцки без футболки. Мысли?",a:["Присоединяюсь тоже без","Просто смотрю","Убиваю его"],s:[0,50,100]},
+        {q:"Самый привлекательный наёмник?",a:["Инженер с ключом","Мисс Полинг","Моя турель"],s:[0,100,60]},
+        {q:"MGE-паровозик это...",a:["Стиль жизни","Странный мем","Понятия не имею"],s:[0,40,100]},
+        {q:"Медик лечит только тебя весь раунд. Он...",a:["Мой парень","Хороший тиммейт","Хочет ачивку"],s:[0,100,60]},
+        {q:"Фембой-Скаут просит pocket medic. Реакция?",a:["Лечу ТОЛЬКО его","Игнорирую","Кикаю"],s:[0,50,100]},
+        {q:"Как часто смотришь на спину Шпиона?",a:["Подозрительно часто","Только spy-check","Я сам Шпион в платье"],s:[20,100,0]},
+        {q:"Золотая Сковорода или крепкая мужская дружба?",a:["Сковорода","Дружба с маслом","И то и другое"],s:[100,0,30]},
+        {q:"Насмешка Групповое Каре это...",a:["Повод сблизиться","Просто танец","Тактика"],s:[0,50,100]},
+        {q:"Скаут надел розовый окрас. Он...",a:["Фембой","Любит розовый","Дальтоник"],s:[0,50,100]},
+        {q:"Гачимучи-ремиксы TF2?",a:["Мой плейлист","Иногда смешно","Не моё"],s:[0,50,100]},
+        {q:"Зачем Снайперу банка Карате?",a:["Обливать мужчин","Для дела","Не знаю"],s:[0,60,100]},
+        {q:"Buff Mercs - искусство?",a:["БЕЗУСЛОВНО","Нет","Много масла"],s:[0,100,10]},
+        {q:"Инвиз Шпионом чтобы...",a:["Побыть в раздевалке","Убить инженера","Скрыться от жизни"],s:[0,100,50]},
+        {q:"Медик в Стильном Саваже. Мысли?",a:["Какой мужчина","Лечи давай","Хорошая шапка"],s:[0,80,100]},
+        {q:"Get behind me Doctor значит...",a:["Начало крепкого вечера","Просьба о защите","Тактика"],s:[0,50,100]},
+        {q:"Солдат без рубашки на MGE. Реакция?",a:["Тоже снимаю","Играю","Выхожу"],s:[0,50,100]},
+        {q:"Любимый мем TF2?",a:["Гачи-Инженер","Pootis","Мисс Полинг"],s:[0,50,100]},
+        {q:"Приглашение на furry-фембой сервер?",a:["Захожу","Иронично захожу","Блокирую"],s:[0,30,100]},
+        {q:"Дуэль Хэви vs Хэви это...",a:["Масляная романтика","Битва титанов","Скучно"],s:[0,70,100]},
+        {q:"Что снится натуралу?",a:["Мисс Полинг","Золотая сковорода","Рокет-джамп"],s:[100,60,70]},
+        {q:"Твой Steam-аватар?",a:["Аниме-фембой","Наёмник без рубашки","Обычный мем"],s:[0,20,100]},
+        {q:"Розовый окрас на оружии?",a:["Мой стиль","Для фембоев","Мне всё равно"],s:[0,50,100]},
+        {q:"Казоцки с незнакомым Хэви?",a:["Свидание","Просто весело","Убиваю танцующих"],s:[0,60,100]},
+        {q:"Ты натурал?",a:["Да","Не уверен","У меня 3000 часов TF2 о чём ты"],s:[100,40,20]}
+    ],
+    results: [
+        {min:80,t:"АЛЬФА-НАТУРАЛ",d:"Сакстон Хейл лично пожал тебе руку. Ни один фембой, ни одна банка Карате не собьёт тебя с пути. Ты - скала.",stamp:"ОДОБРЕНО MANN CO."},
+        {min:55,t:"КРЕПКИЙ МУЖИК",d:"Ты в целом натурал, но подозрительно долго смотришь на Казоцки. Следи за собой наёмник.",stamp:"ДОПУСТИМО"},
+        {min:30,t:"ЗОНА РИСКА",d:"Ты балансируешь на грани. MGE-паровозик разогревается. Tick Tock тихо играет на фоне.",stamp:"ПОД НАБЛЮДЕНИЕМ"},
+        {min:0,t:"MGE-ЛЕГЕНДА",d:"Масло в пути, Tick Tock на повторе, рубашка давно снята. Добро пожаловать в братство.",stamp:"ЗАВЕРБОВАН"}
+    ]
+},
+
+tf2fan: {
+    title: "TECT HA ФAHATA TF2", type: "tf2fan",
+    questions: [
+        {q:"Сколько часов в TF2?",a:["Меньше 100","500-2000","2000+"],s:[10,60,100]},
+        {q:"Что такое Локализация файлов?",a:["Обновление","Священный ритуал","Не знаю"],s:[50,100,10]},
+        {q:"Последнее крупное обновление?",a:["Недавно было","Jungle Inferno 2017","Не помню"],s:[10,100,30]},
+        {q:"Сколько классов в TF2?",a:["9","10","Зависит от модов"],s:[100,10,50]},
+        {q:"Шляпы это...",a:["Косметика","Главная механика","Смысл жизни"],s:[30,60,100]},
+        {q:"Что такое Unusual?",a:["Шапка с эффектом","Оружие","Читерство"],s:[100,10,0]},
+        {q:"Random crits are...",a:["Fair and balanced","Нужно убрать","Часть души TF2"],s:[100,40,80]},
+        {q:"Что такое MvM?",a:["Mann vs Machine","Мод","Не знаю"],s:[100,30,0]},
+        {q:"Лучшая карта?",a:["2fort","Badwater","Hightower без кепа"],s:[80,60,100]},
+        {q:"Spy-crab делает что?",a:["Крабо-ходит","Убивает","Впервые слышу"],s:[100,10,0]},
+        {q:"Кто такой Архимед?",a:["Голубь Медика","Оружие","Карта"],s:[100,0,0]},
+        {q:"Pootis - чья фраза?",a:["Хэви","Скаут","Демоман"],s:[100,0,0]},
+        {q:"Killbind это...",a:["Кнопка суицида","Бинд на фраг","Оружие"],s:[100,30,0]},
+        {q:"Friendlies это...",a:["Святые не трогать","Лёгкие фраги","Душа TF2"],s:[70,20,100]},
+        {q:"Реплики Солдата наизусть?",a:["Каждую","Большинство","Нет"],s:[100,60,10]},
+        {q:"Год выхода TF2?",a:["2007","2010","Давно"],s:[100,20,30]},
+        {q:"Australium это...",a:["Золотое оружие","Страна","Металл"],s:[100,0,60]},
+        {q:"Administrator это...",a:["Хелен","Мисс Полинг","Жена Сакстона"],s:[100,20,0]},
+        {q:"Комиксы TF2 читал?",a:["Все","Некоторые","Нет"],s:[100,50,0]},
+        {q:"Market Garden это...",a:["Крит лопатой в полёте","Магазин","Карта"],s:[100,10,10]},
+        {q:"Демоман он...",a:["Шотландский циклоп","Мужик с бомбами","Кто"],s:[100,40,0]},
+        {q:"Conga это...",a:["Групповой танец","Оружие","Режим игры"],s:[100,0,10]},
+        {q:"Самый быстрый класс?",a:["Скаут","Медик","Шпион"],s:[100,20,10]},
+        {q:"Heavy Update будет?",a:["Я ВЕРЮ","Нет","Что это"],s:[100,60,0]},
+        {q:"TF2 умрёт?",a:["НИКОГДА","Скоро","Уже мертв"],s:[100,30,20]}
+    ],
+    results: [
+        {min:80,t:"ХРАНИТЕЛЬ ГРАВИЯ",d:"Ты помнишь каждый патч, каждый баг, каждую шляпу. TF2 течёт в твоих венах вместо крови.",stamp:"ВЕТЕРАН MANN CO."},
+        {min:55,t:"БЫВАЛЫЙ НАЁМНИК",d:"Сотни часов, десятки обновлений, тысячи смертей от критов. Ты видел многое.",stamp:"ОПЫТНЫЙ БОЕЦ"},
+        {min:30,t:"КАЗУАЛ",d:"Заходишь раз в месяц, надеваешь Гиббус, идёшь на 2fort. И это прекрасно.",stamp:"F2P СТАТУС"},
+        {min:0,t:"ТУРИСТ",d:"Установил игру вчера. Впереди 3000 часов. Удачи новобранец.",stamp:"НОВОБРАНЕЦ"}
+    ]
+},
+
+medic: {
+    title: "TECT HA MEДИKA", type: "medic",
+    questions: [
+        {q:"Пациент на 99% HP орёт MEDIC. Реакция?",a:["Лечу","Игнорирую","Достаю Ubersaw"],s:[80,30,100]},
+        {q:"Убер 100%. Мысли?",a:["МЯСО БУДЕТ","Помру до активации","Жду вечно"],s:[100,10,70]},
+        {q:"Хэви кричит MEDIC 3-й раз за 5 секунд?",a:["Бегу","Мьютю","Лечу с ненавистью"],s:[70,20,100]},
+        {q:"Кого лечишь первым?",a:["Кто ближе","Кто лучше играет","Кто красивее"],s:[60,100,40]},
+        {q:"Шпион за спиной. Действия?",a:["Разворот Ubersaw","Зову помощь","Принимаю судьбу"],s:[100,50,0]},
+        {q:"Crossbow или Шприцемёт?",a:["Crossbow я снайпер","Шприцемёт я маньяк","По настроению"],s:[100,80,50]},
+        {q:"Скаут забрал аптечку перед носом?",a:["Понимаю","Чёрный список","НИКОГДА не лечу его"],s:[30,80,100]},
+        {q:"Ubersaw главное оружие?",a:["Это религия","Луч важнее","Ампутатор топ"],s:[100,50,70]},
+        {q:"Пациент побежал в 6 врагов?",a:["Бегу за ним","Пусть дохнет","Убер и вперёд"],s:[40,80,100]},
+        {q:"Криц или стандартный Убер?",a:["Криц урон","Стандарт неуязвимость","Квик-Фикс"],s:[80,100,60]},
+        {q:"Гиббус-Солдат просит лечения?",a:["Лечу все равны","Нехотя","Только за шляпу"],s:[100,50,70]},
+        {q:"Лечить или убивать пилой?",a:["Лечить","Пилить","Оба сразу"],s:[70,60,100]},
+        {q:"Бросал пациента умирать?",a:["Никогда","Ради выживания","Постоянно"],s:[100,60,20]},
+        {q:"Oops zat was not medicine это...",a:["Мой девиз","Реплика","Тревожный знак"],s:[100,40,70]},
+        {q:"Убийств пилой за матч норма?",a:["0","3-5","10+"],s:[20,60,100]},
+        {q:"Горящий тиммейт бежит к тебе?",a:["Лечу","Смотрю как горит","Спасаю и ругаю Пиро"],s:[80,0,100]},
+        {q:"Вражеский Медик один?",a:["Пилю","Игнорирую","Уважаю коллегу"],s:[100,20,60]},
+        {q:"Умереть ради пациента?",a:["Всегда","Зависит","Я важнее"],s:[70,50,100]},
+        {q:"Главное для Медика?",a:["Не умереть","Лечить","Контролируемое безумие"],s:[80,60,100]},
+        {q:"Медик лучший класс?",a:["АБСОЛЮТНО","Один из лучших","Нет"],s:[100,60,0]}
+    ],
+    results: [
+        {min:80,t:"ДОКТОР ЛЮДВИГ",d:"Безумный гений. Пила в одной руке, луч в другой. Архимед в грудной клетке. Ты идеален.",stamp:"ЛИЦЕНЗИЯ ОДОБРЕНА"},
+        {min:55,t:"БОЕВОЙ МЕДИК",d:"50% лечения 50% насилия пилой. Баланс который пугает обе команды.",stamp:"ОПАСЕН"},
+        {min:30,t:"ПОЛЕВОЙ САНИТАР",d:"Стараешься но Шпионы и Скауты с аптечками не дают жить. Держись.",stamp:"СТАЖЁР"},
+        {min:0,t:"ЖЕРТВА ШПИОНА",d:"Ты мёртв. Шпион зарезал тебя 14 раз. Рассмотри смену профессии.",stamp:"МЁРТВ"}
+    ]
+},
+
+furry: {
+    title: "TECT HA ФYPPИ", type: "furry",
+    questions: [
+        {q:"Любимый аксессуар на Пиро?",a:["Голова дракона волка","Обычный противогаз","Кошачьи ушки"],s:[100,0,90]},
+        {q:"Отношение к фембоям?",a:["Отрицательно MGE-натурал","Нейтрально","Я один из них"],s:[0,50,100]},
+        {q:"Ник содержит OwO UwU или nya?",a:["Да","Нет","Раньше содержал"],s:[100,0,60]},
+        {q:"Пиро мужчина или женщина?",a:["Пушистик","Мужик","Не важно"],s:[100,0,20]},
+        {q:"Ставил furry-спрей в TF2?",a:["Да горжусь","Нет","Что такое спрей"],s:[100,0,10]},
+        {q:"Фурри-сервера TF2 это...",a:["Мой дом","Место для троллинга","Не был"],s:[100,30,0]},
+        {q:"Фурри-арт наёмников?",a:["Сохраняю","Пролистываю","Закрываю иду на MGE"],s:[100,40,0]},
+        {q:"Наёмники как антро-животные?",a:["Идеально","Странно","Удалю TF2"],s:[100,30,0]},
+        {q:"Аксессуар Хвост в TF2?",a:["На каждом классе","Нет","Такой есть?"],s:[100,0,40]},
+        {q:"Steam-аватарка?",a:["Фурсона","Наёмник","Мем или фото"],s:[100,10,0]},
+        {q:"Косплей Пиро в фурсьюте?",a:["Великолепно","Странно","Оскорбление всего"],s:[100,40,0]},
+        {q:"Знаешь что такое фурсона?",a:["У меня есть своя","Слышал","Не знаю"],s:[100,40,0]},
+        {q:"Розовый цвет на ВСЁМ?",a:["Мой стиль","Просто цвет","Для слабаков"],s:[90,40,0]},
+        {q:"Zootopia и Beastars?",a:["ОБОЖАЮ","Норм","Не смотрел"],s:[100,50,0]},
+        {q:"Маска Пиро скрывает...",a:["Милую мордочку","Ожоги","Лицо мужика"],s:[100,30,0]},
+        {q:"Кошачьи ушки в реальности?",a:["Уже ношу","Может дома","Никогда"],s:[100,50,0]},
+        {q:"Идеальное свидание?",a:["Фурри-конвент","MGE-турнир","Кино"],s:[100,0,20]},
+        {q:"Класс для кастомизации?",a:["Пиро пушистые сеты","Скаут фембой-сеты","Солдат мужик-сеты"],s:[100,80,0]},
+        {q:"Слово yiff вызывает...",a:["Улыбку","Смущение","Отвращение"],s:[100,50,0]},
+        {q:"Фурри-группа в Steam?",a:["Да несколько","Нет","Я в группе MGE"],s:[100,20,0]},
+        {q:"Протогены это...",a:["Милашки","Роботы?","Что это"],s:[100,40,10]},
+        {q:"Мод хвост Скаута?",a:["СТАВЛЮ","Забавно","Удаляю"],s:[100,40,0]},
+        {q:"Любимые символы в нике?",a:["Тильды и сердечки","Цифры и буквы","Ничего лишнего"],s:[100,20,0]},
+        {q:"Кто ты в душе?",a:["Пушистое создание","Наёмник","MGE-воин без рубашки"],s:[100,20,0]},
+        {q:"Ты фурри?",a:["Да и горжусь","Возможно","НЕТ я натурал и MGE-машина"],s:[100,50,0]}
+    ],
+    results: [
+        {min:80,t:"ПУШИСТАЯ ЛЕГЕНДА",d:"Ты альфа-фурри серверов TF2. Фурсона наводит ужас на натуралов. Хвост развевается ушки торчат.",stamp:"OwO ОДОБРЕНО"},
+        {min:55,t:"ФЕМБОЙ / СКРЫТЫЙ ФУРРИ",d:"Фурсьют ещё не надет но кошачьи ушки уже в корзине. Скоро очень скоро...",stamp:"UwU В ПРОЦЕССЕ"},
+        {min:30,t:"ЛЮБОПЫТНЫЙ НАЁМНИК",d:"Заходишь на фурри-сервера иронично смотришь арт случайно. Мы знаем правду.",stamp:"ПОД ПОДОЗРЕНИЕМ"},
+        {min:0,t:"НАТУРАЛ / MGE-МАШИНА",d:"Никакой шерсти никаких ушек. Только сталь мышцы рокет-джамп и масло. Сакстон одобряет.",stamp:"ЧИСТ"}
+    ]
+}
+
+};
+
+/* ══════════════════════
+   QUIZ LOGIC
+   ══════════════════════ */
+let cQuiz=null, cIdx=0, cScore=0;
+
+function startQuiz(k) {
+    cQuiz=data[k]; cIdx=0; cScore=0;
+    document.getElementById('main-menu').style.display='none';
+    document.getElementById('quiz-window').style.display='block';
+    document.getElementById('quiz-content').style.display='block';
+    document.getElementById('result-screen').style.display='none';
+    showQ();
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showQ() {
+    const q=cQuiz.questions[cIdx], t=cQuiz.questions.length;
+    document.getElementById('q-title').innerText=cQuiz.title;
+    document.getElementById('q-counter').innerText=(cIdx+1)+' / '+t;
+    document.getElementById('progress').style.width=(cIdx/t*100)+'%';
+    document.getElementById('q-text').innerText=q.q;
+    const box=document.getElementById('options');
+    box.innerHTML='';
+    q.a.forEach((a,i)=>{
+        const b=document.createElement('button');
+        b.className='option-btn';
+        b.innerText=a;
+        b.onclick=()=>{cScore+=q.s[i];cIdx++;cIdx<cQuiz.questions.length?showQ():showRes();};
+        box.appendChild(b);
+    });
+}
+
+function showRes() {
+    document.getElementById('quiz-content').style.display='none';
+    document.getElementById('result-screen').style.display='block';
+    document.getElementById('progress').style.width='100%';
+
+    const mx=cQuiz.questions.length*100;
+    let p=Math.round((cScore/mx)*100);
+    if(p>100)p=100; if(p<0)p=0;
+
+    let d=0;
+    const iv=setInterval(()=>{
+        d+=Math.ceil((p-d)/8)||1;
+        if(d>=p){d=p;clearInterval(iv);}
+        document.getElementById('res-percent').innerText=d+'%';
+    },25);
+
+    let ch=cQuiz.results[cQuiz.results.length-1];
+    for(let r of cQuiz.results){if(p>=r.min){ch=r;break;}}
+
+    document.getElementById('res-rank').innerText=ch.t;
+    document.getElementById('stamp').innerText=ch.stamp;
+    document.getElementById('res-desc').innerText=ch.d;
+
+    drawResult(cQuiz.type,p);
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function backToMenu() {
+    document.getElementById('quiz-window').style.display='none';
+    document.getElementById('main-menu').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>
